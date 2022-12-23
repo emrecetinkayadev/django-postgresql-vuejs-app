@@ -1,0 +1,1 @@
+# django-postgresql-vuejs-app

@@ -15,16 +15,19 @@ def departmentApi(request, id=0):
         departments_serializer = DepartmentSerializer(departments, many=True)
         return JsonResponse(departments_serializer.data, safe=False)
     elif request.method == 'POST':
-        department_data = JSONParser().parse(request)
+        department_data = JSONParser().parse(request,)
+        print(department_data)
         departments_serializer = DepartmentSerializer(data=department_data)
         if departments_serializer.is_valid():
             departments_serializer.save()
-            return JsonResponse("Added Successfully")
+            return JsonResponse("Added Successfully", safe=False)
         return JsonResponse("Failed to add", safe=False)
     elif request.method == 'PUT':
         department_data = JSONParser().parse(request)
-        department = Departments.objects.get(DepartmentId=department_data['DepartmentId'])
-        departments_serializer = DepartmentSerializer(department, data=department_data)
+        department = Departments.objects.get(
+            DepartmentId=department_data['DepartmentId'])
+        departments_serializer = DepartmentSerializer(
+            department, data=department_data)
         if departments_serializer.is_valid():
             departments_serializer.save()
             return JsonResponse('Update Successfully', safe=False)
